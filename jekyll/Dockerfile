@@ -32,3 +32,6 @@ LABEL docker-shell.args.1="-e"
 LABEL docker-shell.args.2="HOSTIP=\$HOSTIP"
 LABEL docker-shell.windows.args.1="-p=4000:4000"
 LABEL docker-shell.mac.args.1="-p=4000:4000"
+
+# Export an alias for our wrapper script
+LABEL developer-images.aliases.1="serve"

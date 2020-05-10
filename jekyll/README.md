@@ -20,6 +20,8 @@ This image provides a development environment for building static sites using [J
     serve
     ```
 
+You can also [export an alias](../README.md#exporting-aliases) for the wrapper script.
+
 
 ## Jekyll project configuration
 
