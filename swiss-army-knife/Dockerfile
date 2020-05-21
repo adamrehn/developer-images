@@ -81,6 +81,7 @@ RUN apt-get update && \
 		libfftw3-bin \
 		libfontconfig1 \
 		libfreetype6 \
+		libimage-exiftool-perl \
 		libjbig0 \
 		libjpeg-turbo8 \
 		libjpeg8 \
@@ -115,6 +116,9 @@ RUN useradd --create-home --home /home/user --shell /bin/bash --uid 1000 user &&
 	passwd -d user && \
 	usermod -aG sudo user
 USER user
+
+# Export an alias for ExifTool
+LABEL developer-images.aliases.exiftool.1="exiftool"
 
 # Export aliases for the FFmpeg binaries
 LABEL developer-images.aliases.ffmpeg.1="ffmpeg"

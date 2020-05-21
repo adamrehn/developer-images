@@ -2,6 +2,7 @@
 
 This image encapsulates multiple tools for converting and manipulating a variety of file formats, including multimedia files, raster images, text and PDF documents. The following tools are included:
 
+- [ExifTool](https://exiftool.org/)
 - [FFmpeg](https://www.ffmpeg.org/)
 - [GDAL](https://gdal.org/)
 - [Graphviz](https://www.graphviz.org/)
