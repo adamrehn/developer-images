@@ -5,6 +5,8 @@ This repository contains Dockerfiles that produce container images suitable for 
 
 The following container images are currently available:
 
+- [**cloud-tools**](./cloud-tools): encapsulates tools for interacting with various public cloud providers.
+
 - [**jekyll**](./jekyll): provides a development environment for building static sites using [Jekyll](https://jekyllrb.com/). The image is designed to accommodate both [GitHub Pages](https://pages.github.com/) sites and projects that use a `Gemfile` to manage their dependencies (e.g. sites hosted on [GitLab Pages](https://about.gitlab.com/stages-devops-lifecycle/pages/).)
 
 - [**swiss-army-knife**](./swiss-army-knife): encapsulates multiple tools for converting and manipulating a variety of file formats, including multimedia files, raster images, text and PDF documents.
