@@ -14,6 +14,10 @@ RUN apt-get update && \
 		unzip && \
 	rm -rf /var/lib/apt/lists/*
 
+# Add the Google Cloud distribution and public key
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+RUN curl --silent "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key --keyring "/usr/share/keyrings/cloud.google.gpg" add -
+
 # Install the AWS CLI
 RUN curl --silent -L "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip && \
 	unzip /tmp/awscliv2.zip -d /tmp && \
@@ -21,7 +25,13 @@ RUN curl --silent -L "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
 	rm -rf ./tmp/aws && \
 	rm /tmp/awscliv2.zip
 
-# Install kubectl (required by eksctl)
+# Install the Google Cloud SDK
+RUN apt-get update && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		google-cloud-sdk && \
+	rm -rf /var/lib/apt/lists/*
+
+# Install kubectl
 ARG KUBECTL_VERSION=1.19.0
 RUN curl --silent -L "https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" -o /usr/local/bin/kubectl
 RUN chmod a+x /usr/local/bin/kubectl
@@ -41,8 +51,14 @@ USER user
 # Bind-mount the SSH configuration directory
 LABEL docker-shell.mounts.1="~/.ssh:/home/user/.ssh"
 
+# Bind-mount the boto configuration directory (used by the AWS SDK)
+LABEL docker-shell.mounts.2="~/.boto:/home/user/.boto"
+
+# Bind-mount the gcloud configuration directory
+LABEL docker-shell.mounts.3="~/.config/gcloud:/home/user/.config/gcloud"
+
 # Bind-mount the kubectl configuration directory
-LABEL docker-shell.mounts.2="~/.kube:/home/user/.kube"
+LABEL docker-shell.mounts.4="~/.kube:/home/user/.kube"
 
 # Propagate AWS credentials from the host system
 LABEL docker-shell.args.1="-e"
@@ -55,6 +71,9 @@ LABEL docker-shell.args.6="AWS_DEFAULT_REGION"
 # Export aliases for the AWS CLI and eksctl
 LABEL developer-images.aliases.aws="aws"
 LABEL developer-images.aliases.eksctl="eksctl"
+
+# Export an alias for gcloud
+LABEL developer-images.aliases.gcloud="gcloud"
 
 # Export an alias for kubectl
 LABEL developer-images.aliases.kubectl="kubectl"
