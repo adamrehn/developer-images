@@ -42,12 +42,12 @@ RUN apt-get update && \
 
 # Download and extract the ImageMagick source tarball
 WORKDIR /tmp
-RUN curl -fsSL "https://imagemagick.org/download/releases/ImageMagick-7.0.10-11.tar.gz" -o ImageMagick-7.0.10-11.tar.gz && \
-	tar xvzf ImageMagick-7.0.10-11.tar.gz && \
-	rm ImageMagick-7.0.10-11.tar.gz
+RUN curl -fsSL "https://github.com/ImageMagick/ImageMagick/archive/7.0.10-28.tar.gz" -o ImageMagick.tar.gz && \
+	tar xvzf ImageMagick.tar.gz && \
+	rm ImageMagick.tar.gz
 
 # Configure and build ImageMagick
-WORKDIR /tmp/ImageMagick-7.0.10-11
+WORKDIR /tmp/ImageMagick-7.0.10-28
 RUN ./configure \
 		--prefix=/opt/imagemagick \
 		--with-quantum-depth=16 \
