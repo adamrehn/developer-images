@@ -4,6 +4,7 @@ This image encapsulates tools for interacting with various public cloud provider
 
 - [AWS Command Line Interface](https://aws.amazon.com/cli/)
 - [eksctl - The official CLI for Amazon EKS](https://eksctl.io/)
+- [Azure Command Line Interface](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 - [gcloud - Google Cloud SDK Command Line Interface](https://cloud.google.com/sdk/gcloud)
 - [kubectl](https://kubernetes.io/docs/reference/kubectl/) (used by eksctl and gcloud)
 

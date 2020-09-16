@@ -10,6 +10,7 @@ RUN apt-get update && \
 		gnupg2 \
 		groff \
 		less \
+		lsb-release \
 		software-properties-common \
 		unzip && \
 	rm -rf /var/lib/apt/lists/*
@@ -18,6 +19,10 @@ RUN apt-get update && \
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 RUN curl --silent "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key --keyring "/usr/share/keyrings/cloud.google.gpg" add -
 
+# Add the Microsoft distribution and public key
+RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+
 # Install the AWS CLI
 RUN curl --silent -L "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o /tmp/awscliv2.zip && \
 	unzip /tmp/awscliv2.zip -d /tmp && \
@@ -25,9 +30,10 @@ RUN curl --silent -L "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
 	rm -rf ./tmp/aws && \
 	rm /tmp/awscliv2.zip
 
-# Install the Google Cloud SDK
+# Install the Azure CLI and the Google Cloud SDK
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+		azure-cli \
 		google-cloud-sdk && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -54,6 +60,9 @@ LABEL docker-shell.mounts.1="~/.ssh:/home/user/.ssh"
 # Bind-mount the boto configuration directory (used by the AWS SDK)
 LABEL docker-shell.mounts.2="~/.boto:/home/user/.boto"
 
+# Bind-mount the Azure CLI configuration directory
+LABEL docker-shell.mounts.2="~/.azure:/home/user/.azure"
+
 # Bind-mount the gcloud configuration directory
 LABEL docker-shell.mounts.3="~/.config/gcloud:/home/user/.config/gcloud"
 
@@ -71,6 +80,9 @@ LABEL docker-shell.args.6="AWS_DEFAULT_REGION"
 # Export aliases for the AWS CLI and eksctl
 LABEL developer-images.aliases.aws="aws"
 LABEL developer-images.aliases.eksctl="eksctl"
+
+# Export an alias for the Azure CLI
+LABEL developer-images.aliases.az="az"
 
 # Export an alias for gcloud
 LABEL developer-images.aliases.gcloud="gcloud"
