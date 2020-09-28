@@ -19,6 +19,10 @@ RUN apt-get update && \
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 RUN curl --silent "https://packages.cloud.google.com/apt/doc/apt-key.gpg" | apt-key --keyring "/usr/share/keyrings/cloud.google.gpg" add -
 
+# Add the HashiCorp distribution and public key
+RUN curl -fsSL "https://apt.releases.hashicorp.com/gpg" | apt-key add -
+RUN apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
 # Add the Microsoft distribution and public key
 RUN echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list
 RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
@@ -30,11 +34,13 @@ RUN curl --silent -L "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" 
 	rm -rf ./tmp/aws && \
 	rm /tmp/awscliv2.zip
 
-# Install the Azure CLI and the Google Cloud SDK
+# Install the Azure CLI, the Google Cloud SDK, Packer and Terraform
 RUN apt-get update && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 		azure-cli \
-		google-cloud-sdk && \
+		google-cloud-sdk \
+		packer \
+		terraform && \
 	rm -rf /var/lib/apt/lists/*
 
 # Install kubectl
@@ -89,3 +95,7 @@ LABEL developer-images.aliases.gcloud="gcloud"
 
 # Export an alias for kubectl
 LABEL developer-images.aliases.kubectl="kubectl"
+
+# Export aliases for Packer and Terraform
+LABEL developer-images.aliases.packer="packer"
+LABEL developer-images.aliases.terraform="terraform"

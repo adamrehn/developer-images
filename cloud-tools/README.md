@@ -7,6 +7,8 @@ This image encapsulates tools for interacting with various public cloud provider
 - [Azure Command Line Interface](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 - [gcloud - Google Cloud SDK Command Line Interface](https://cloud.google.com/sdk/gcloud)
 - [kubectl](https://kubernetes.io/docs/reference/kubectl/) (used by eksctl and gcloud)
+- [Packer](https://www.packer.io/)
+- [Terraform](https://www.terraform.io/)
 
 To get started using the image, ensure you have the [common prerequisites](../README.md) installed and then do the following:
 
