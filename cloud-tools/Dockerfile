@@ -76,12 +76,18 @@ LABEL docker-shell.mounts.3="~/.config/gcloud:/home/user/.config/gcloud"
 LABEL docker-shell.mounts.4="~/.kube:/home/user/.kube"
 
 # Propagate AWS credentials from the host system
-LABEL docker-shell.args.1="-e"
-LABEL docker-shell.args.2="AWS_ACCESS_KEY_ID"
-LABEL docker-shell.args.3="-e"
-LABEL docker-shell.args.4="AWS_SECRET_ACCESS_KEY"
-LABEL docker-shell.args.5="-e"
-LABEL docker-shell.args.6="AWS_DEFAULT_REGION"
+LABEL docker-shell.args.01="-e"
+LABEL docker-shell.args.02="AWS_ACCESS_KEY_ID"
+LABEL docker-shell.args.03="-e"
+LABEL docker-shell.args.04="AWS_SECRET_ACCESS_KEY"
+LABEL docker-shell.args.05="-e"
+LABEL docker-shell.args.06="AWS_DEFAULT_REGION"
+
+# Propagate Packer and Terraform logging configuration from the host system
+LABEL docker-shell.args.07="-e"
+LABEL docker-shell.args.08="PACKER_LOG"
+LABEL docker-shell.args.09="-e"
+LABEL docker-shell.args.10="TF_LOG"
 
 # Export aliases for the AWS CLI and eksctl
 LABEL developer-images.aliases.aws="aws"
