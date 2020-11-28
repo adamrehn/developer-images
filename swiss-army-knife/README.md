@@ -9,6 +9,7 @@ This image encapsulates multiple tools for converting and manipulating a variety
 - [ImageMagick](https://imagemagick.org/index.php)
 - [Pandoc](https://pandoc.org/)
 - [Poppler utilities](https://poppler.freedesktop.org/)
+- [pdf2svg](https://github.com/dawbarton/pdf2svg)
 
 To get started using the image, ensure you have the [common prerequisites](../README.md) installed and then do the following:
 

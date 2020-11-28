@@ -103,6 +103,7 @@ RUN apt-get update && \
 		libwmf0.2-7 \
 		libxml2 \
 		pandoc \
+		pdf2svg \
 		poppler-utils \
 		sudo \
 		zlib1g && \
@@ -228,3 +229,6 @@ LABEL developer-images.aliases.poppler.10="pdftoppm"
 LABEL developer-images.aliases.poppler.11="pdftops"
 LABEL developer-images.aliases.poppler.12="pdftotext"
 LABEL developer-images.aliases.poppler.13="pdfunite"
+
+# Export an alias for pdf2svg
+LABEL developer-images.aliases.pdf2svg.1="pdf2svg"
