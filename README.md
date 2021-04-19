@@ -37,4 +37,4 @@ Most of the container images produced by the Dockerfiles in this repository cont
 
 ## Legal
 
-Copyright &copy; 2020, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](./LICENSE) for details.
+Copyright &copy; 2020 - 2021, Adam Rehn. Licensed under the MIT License, see the file [LICENSE](./LICENSE) for details.
