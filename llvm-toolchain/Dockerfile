@@ -73,6 +73,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		git \
 		cmake \
 		libc-dev \
+		make \
 		ninja-build \
 		python3 \
 		python3-distutils \
