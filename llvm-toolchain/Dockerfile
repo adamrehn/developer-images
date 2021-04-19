@@ -80,11 +80,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		sudo && \
 	rm -rf /var/lib/apt/lists/*
 
-# Install the Conan package management system and override the auto-detected C++ standard library with the correct value
+# Install the Conan package management system
 RUN pip3 install setuptools wheel && \
-	pip3 install conan && \
-	conan profile new default --detect && \
-	conan profile update "settings.compiler.libcxx=libc++" default
+	pip3 install conan
 
 # Disable the default "lecture" message the first time a user runs a command using sudo
 RUN echo 'Defaults lecture="never"' >> /etc/sudoers
@@ -94,3 +92,7 @@ RUN useradd --create-home --home /home/user --shell /bin/bash --uid 1000 user &&
 	passwd -d user && \
 	usermod -aG sudo user
 USER user
+
+# Configure the default Conan profile for the user and override the auto-detected C++ standard library with the correct value
+RUN conan profile new default --detect && \
+	conan profile update "settings.compiler.libcxx=libc++" default
