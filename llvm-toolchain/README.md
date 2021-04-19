@@ -11,6 +11,8 @@ This image encapsulates a complete [LLVM](https://llvm.org/) compiler toolchain,
 In addition to the LLVM toolchain itself, the image also includes:
 
 - [CMake](https://cmake.org/)
+- [Conan](https://conan.io/)
+- [Git](https://git-scm.com/)
 - [Ninja](https://ninja-build.org/)
 
 The clang compiler is configured to use lld, libc++ and compiler-rt by default, and will statically link against libc++, libc++abi and libunwind.

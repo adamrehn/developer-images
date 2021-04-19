@@ -61,18 +61,30 @@ COPY --from=builder /opt/llvm/lib/libc++experimental.a /usr/lib/
 COPY --from=builder /opt/llvm/lib/libunwind.a /usr/lib/
 COPY --from=builder /opt/llvm/libexec/* /usr/libexec/
 
-# Create symlinks for clang and clang++
+# Create symlinks for clang, clang++ and llvm-ar
 RUN ln -s /usr/bin/clang /usr/bin/cc
 RUN ln -s /usr/bin/clang++ /usr/bin/c++
+RUN ln -s /usr/bin/llvm-ar /usr/bin/ar
 
 # Install build systems to use with the LLVM toolchain, along with sudo support
+# (Note that we do NOT install GCC, which is present in the previous build stage)
 RUN apt-get update && apt-get install -y --no-install-recommends \
 		ca-certificates \
+		git \
 		cmake \
 		libc-dev \
 		ninja-build \
-		sudo  && \
+		python3 \
+		python3-distutils \
+		python3-pip \
+		sudo && \
 	rm -rf /var/lib/apt/lists/*
+
+# Install the Conan package management system and override the auto-detected C++ standard library with the correct value
+RUN pip3 install setuptools wheel && \
+	pip3 install conan && \
+	conan profile new default --detect && \
+	conan profile update "settings.compiler.libcxx=libc++" default
 
 # Disable the default "lecture" message the first time a user runs a command using sudo
 RUN echo 'Defaults lecture="never"' >> /etc/sudoers
